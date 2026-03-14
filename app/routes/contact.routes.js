@@ -1,27 +1,17 @@
-exports.create = (req, res) => {
-  res.send({ message: "create handler" });
-};
+const express = require("express");
+const contacts = require("../controllers/contact.controllers");
 
-exports.findAll = (req, res) => {
-  res.send({ message: "findAll handler" });
-};
+const router = express.Router();
 
-exports.findOne = (req, res) => {
-  res.send({ message: "findOne handler" });
-};
+router.route("/")
+  .get(contacts.findAll)
+  .post(contacts.create)
+  .delete(contacts.deleteAll);
 
-exports.update = (req, res) => {
-  res.send({ message: "update handler" });
-};
 
-exports.delete = (req, res) => {
-  res.send({ message: "delete handler" });
-};
+router.route("/favorite").get(contacts.findAllFavorite);
 
-exports.deleteAll = (req, res) => {
-  res.send({ message: "deleteAll handler" });
-};
+router.route("/:id").get(contacts.findOne).put(contacts.update).delete(contacts.delete);
 
-exports.findAllFavorite = (req, res) => {
-  res.send({ message: "findAllFavorite handler" });
-};
+module.exports = router;
+
